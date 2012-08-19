@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h1 Socket.ioのサンプル
+  #connectId
+  #type
+  br
+  input(type='text', id='message', value='')
+  input(type='button', value='Submit Message', onclick="sendMsg()")
+  input(type='button', value='Disconnect', onclick="disConnect()")
+
+  #receiveMsg
