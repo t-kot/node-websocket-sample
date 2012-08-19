@@ -37,6 +37,10 @@ var server = http.createServer(app).listen(app.get('port'),function(){
 
 //Wait the connection of client
 var io = socketIO.listen(server);
+io.configure(function(){
+  io.set("transports", ["xhr-polling"]);
+  io.set("polling duration", 10);
+});
 
 //When the clients connect
 io.sockets.on('connection', function(socket){
