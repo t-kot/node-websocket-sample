@@ -8,9 +8,14 @@ var express = require('express')
   , http = require('http')
   , socketIO = require('socket.io')
   , user = require('./models/user')
+  , mongoose = require('mongoose')
   , path = require('path');
 
 var app = express();
+
+var database_uri = process.env.MONGOHQ_URL || 'mongodb://localhost/node-websocket-sample';
+
+mongoose.connect(database_uri);
 
 app.configure(function(){
   app.set('port', process.env.PORT || 3000);
@@ -28,6 +33,7 @@ app.configure(function(){
 app.configure('development', function(){
   app.use(express.errorHandler());
 });
+
 
 
 
