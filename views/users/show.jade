@@ -1,0 +1,10 @@
+h2 名前
+p= user.name
+p
+  a(href='/users/'+user._id+'/edit')
+    編集
+p
+  a(href='/users/'+user._id)
+  form(action='/users/'+user._id, method='post')
+    input(type='hidden', name='_method', value='delete')
+    input(type='submit', value='削除')

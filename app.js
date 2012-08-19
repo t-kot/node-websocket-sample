@@ -7,6 +7,7 @@ var express = require('express')
   , routes = require('./routes')
   , http = require('http')
   , socketIO = require('socket.io')
+  , user = require('./models/user')
   , path = require('path');
 
 var app = express();
@@ -14,6 +15,7 @@ var app = express();
 app.configure(function(){
   app.set('port', process.env.PORT || 3000);
   app.set('views', __dirname + '/views');
+  app.set('controllers', __dirname + '/controllers');
   app.set('view engine', 'jade');
   app.use(express.favicon());
   app.use(express.logger('dev'));
@@ -28,8 +30,6 @@ app.configure('development', function(){
 });
 
 
-// Routes
-app.get('/', routes.index);
 
 var server = http.createServer(app).listen(app.get('port'),function(){
   console.log("Express server listening on port " + app.get('port'));
@@ -37,9 +37,11 @@ var server = http.createServer(app).listen(app.get('port'),function(){
 
 //Wait the connection of client
 var io = socketIO.listen(server);
-io.configure(function(){
-  io.set("transports", ["xhr-polling"]);
-  io.set("polling duration", 10);
+app.configure('production', function(){
+  io.configure(function(){
+    io.set("transports", ["xhr-polling"]);
+    io.set("polling duration", 10);
+  });
 });
 
 //When the clients connect
@@ -59,3 +61,15 @@ io.sockets.on('connection', function(socket){
     console.log('disconnect');
   });
 });
+
+
+
+// Routes
+app.get('/', routes.index);
+app.get('/users',routes.users.index);
+app.get('/users/new', routes.users.new);
+app.get('/users/:id',routes.users.show);
+app.get('/users/:id/edit',routes.users.edit);
+app.post('/users',routes.users.create);
+app.put('/users/:id', routes.users.update);
+app.del('/users/:id', routes.users.destroy);

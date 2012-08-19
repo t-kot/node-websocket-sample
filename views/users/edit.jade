@@ -1,0 +1,6 @@
+form(action='/users/'+user._id, method='post')
+  h2 氏名
+  input#name(name='name', type='text', value=user.name)
+  p
+    input#submit(type='submit', value='保存')
+  input(type='hidden', name="_method", value="put")

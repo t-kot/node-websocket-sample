@@ -1,7 +1,9 @@
-/*
- * GET home page.
- */
-
 exports.index = function(req, res){
-  res.render('index', { title: 'Express' });
+  if(process.env.NODE_ENV == 'production'){
+    res.render('index', {title: "production"});
+  }else{
+    res.render('index', {title: "development" });
+  }
 };
+
+exports.users = require('./users');

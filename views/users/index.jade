@@ -1,0 +1,9 @@
+table(border='1')
+  - each item in users
+    tr
+      td
+        a(href='/users/'+item._id)
+          =item.name
+p
+  a(href='/users/new')
+    新規作成
